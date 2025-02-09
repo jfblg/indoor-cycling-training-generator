@@ -8,7 +8,21 @@ from fit_tool.profile.profile_type import Sport, SubSport, Intensity, WorkoutSte
 
 NAME = "dev16"
 
-def main():
+def create_workout_step(step_duration_ms, watts_offset):
+    step = WorkoutStepMessage()
+    # step.workout_step_name = 'Step 1' # don't use unless not necessary
+    step.intensity = Intensity.OTHER
+    step.duration_type = WorkoutStepDuration.TIME
+    step.duration_time = step_duration_ms
+    step.target_type = WorkoutStepTarget.POWER_3S
+    step.target_value = 0
+    step.custom_target_value_low = 0
+    step.custom_target_value_high = 0
+    step.custom_target_power_low = watts_offset
+    step.custom_target_power_high = watts_offset
+    return step
+
+def create_workout(workout_name, workout_steps):
     file_id_message = FileIdMessage()
     file_id_message.type = FileType.WORKOUT
     file_id_message.manufacturer = Manufacturer.GARMIN.value
@@ -16,46 +30,44 @@ def main():
     file_id_message.time_created = round(datetime.datetime.now().timestamp() * 1000)
     file_id_message.serial_number = 0x12345678
 
-    workout_steps = []
+    # step = WorkoutStepMessage()
+    # step.workout_step_name = 'Step 1'
+    # step.intensity = Intensity.OTHER
+    # step.duration_type = WorkoutStepDuration.TIME
+    # step.duration_time = 600000 # 10 mminutes
+    # step.target_type = WorkoutStepTarget.POWER_3S
+    # step.target_value = 0
+    # step.custom_target_value_low = 0
+    # step.custom_target_value_high = 0
+    # step.custom_target_power_low = 1100 # must be offset by 1000 (1200 = 200 Watts)
+    # step.custom_target_power_high = 1100
+    # workout_steps.append(step)
 
-    step = WorkoutStepMessage()
-    step.workout_step_name = 'Step 1'
-    step.intensity = Intensity.OTHER
-    step.duration_type = WorkoutStepDuration.TIME
-    step.duration_time = 700000.0 # 10 mminutes
-    step.target_type = WorkoutStepTarget.POWER_3S
-    step.target_value = 0
-    step.custom_target_value_low = 0
-    step.custom_target_value_high = 0
-    step.custom_target_power_low = 1100 # must be offset by 1000 (1200 = 200 Watts)
-    step.custom_target_power_high = 1100
-    workout_steps.append(step)
+    # step = WorkoutStepMessage()
+    # step.workout_step_name = 'Step 2'
+    # step.intensity = Intensity.OTHER
+    # step.duration_type = WorkoutStepDuration.TIME
+    # step.duration_time = 700000.0 # 10 mminutes
+    # step.target_type = WorkoutStepTarget.POWER_3S
+    # step.target_value = 0 # must be set to 0
+    # step.custom_target_value_low = 0 # must be set to 0
+    # step.custom_target_value_high = 0 # must be set to 0
+    # step.custom_target_power_low = 1200 # must be offset by 1000 (1200 = 200 Watts)
+    # step.custom_target_power_high = 1200
+    # workout_steps.append(step)
 
-    step = WorkoutStepMessage()
-    step.workout_step_name = 'Step 2'
-    step.intensity = Intensity.OTHER
-    step.duration_type = WorkoutStepDuration.TIME
-    step.duration_time = 700000.0 # 10 mminutes
-    step.target_type = WorkoutStepTarget.POWER_3S
-    step.target_value = 0 # must be set to 0
-    step.custom_target_value_low = 0 # must be set to 0
-    step.custom_target_value_high = 0 # must be set to 0
-    step.custom_target_power_low = 1200 # must be offset by 1000 (1200 = 200 Watts)
-    step.custom_target_power_high = 1200
-    workout_steps.append(step)
-
-    step = WorkoutStepMessage()
-    step.workout_step_name = 'Step 3'
-    step.intensity = Intensity.OTHER
-    step.duration_type = WorkoutStepDuration.TIME
-    step.duration_time = 700000.0 # 10 mminutes
-    step.target_type = WorkoutStepTarget.POWER_3S
-    step.target_value = 0
-    step.custom_target_value_low = 0
-    step.custom_target_value_high = 0
-    step.custom_target_power_low = 1400 # must be offset by 1000 (1200 = 200 Watts)
-    step.custom_target_power_high = 1400
-    workout_steps.append(step)
+    # step = WorkoutStepMessage()
+    # step.workout_step_name = 'Step 3'
+    # step.intensity = Intensity.OTHER
+    # step.duration_type = WorkoutStepDuration.TIME
+    # step.duration_time = 700000.0 # 10 mminutes
+    # step.target_type = WorkoutStepTarget.POWER_3S
+    # step.target_value = 0
+    # step.custom_target_value_low = 0
+    # step.custom_target_value_high = 0
+    # step.custom_target_power_low = 1400 # must be offset by 1000 (1200 = 200 Watts)
+    # step.custom_target_power_high = 1400
+    # workout_steps.append(step)
 
     workout_message = WorkoutMessage()
     workout_message.workout_name= NAME
@@ -72,9 +84,7 @@ def main():
 
     fit_file = builder.build()
 
-    out_path = f'{NAME}_workout.fit'
+    out_path = f'{workout_name}_workout.fit'
+    print(f"generating: {out_path}")
     fit_file.to_file(out_path)
 
-
-if __name__ == "__main__":
-    main()
