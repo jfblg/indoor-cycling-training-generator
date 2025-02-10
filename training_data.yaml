@@ -1,5 +1,23 @@
 ftp: 224
 workouts:
+  - name: Gora
+    description: "Sweetspot. 1h. Diamond is composed of 4x9-minute sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2-minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
+    steps:
+      - time: "5:00"
+        ftp_percentage: "50%"
+      - time: "10:00"
+        ftp_percentage: "66%"
+      - time: "10:00"
+        ftp_percentage: "55%"
+      - time: "10:00"
+        ftp_percentage: "66%"
+      - time: "10:00"
+        ftp_percentage: "55%"
+      - time: "10:00"
+        ftp_percentage: "66%"
+      - time: "5:00"
+        ftp_percentage: "55%"
+
   - name: Diamond
     description: "Sweetspot. 1h. Diamond is composed of 4x9-minute sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2-minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
     steps:
