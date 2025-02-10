@@ -64,4 +64,6 @@ pip-selfcheck.json
 .history
 .ionide
 
+__pycache__/*
+
 output/
