@@ -1,10 +1,13 @@
 import datetime
+import os
 
 from fit_tool.fit_file_builder import FitFileBuilder
 from fit_tool.profile.messages.file_id_message import FileIdMessage
 from fit_tool.profile.messages.workout_message import WorkoutMessage
 from fit_tool.profile.messages.workout_step_message import WorkoutStepMessage
 from fit_tool.profile.profile_type import Sport, SubSport, Intensity, WorkoutStepDuration, WorkoutStepTarget, Manufacturer, FileType
+
+output_directory = "output"
 
 def create_workout_step(step_duration_ms, watts_offset):
     step = WorkoutStepMessage()
@@ -42,8 +45,8 @@ def create_workout(workout_name, workout_steps):
     builder.add_all(workout_steps)
 
     fit_file = builder.build()
-
-    out_path = f'{workout_name}_workout.fit'
+    out_filename = f'{workout_name}_workout.fit'
+    out_path = os.path.join(output_directory, out_filename)
     print(f"generating: {out_path}")
     fit_file.to_file(out_path)
 
