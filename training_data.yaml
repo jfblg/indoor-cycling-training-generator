@@ -1,7 +1,9 @@
 ftp: 224
 workouts:
-  - name: Gora
-    description: "Sweetspot. 1h. Diamond is composed of 4x9-minute sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2-minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
+  - name: "Gora"
+    category: "sweetspot"
+    duration_estimate: "1h"
+    description: ""
     steps:
       - time: "5:00"
         ftp_percentage: "50%"
@@ -18,8 +20,10 @@ workouts:
       - time: "5:00"
         ftp_percentage: "55%"
 
-  - name: Tanasee
-    description: "Threshold. 1h. Tanasee consists of 3 sets of short efforts lasting between 1-4 minutes at 95-108% FTP with very short, 30-second recoveries between intervals."
+  - name: "Tanasee"
+    category: "threshold"
+    duration_estimate: "1h"
+    description: "Tanasee consists of 3 sets of short efforts lasting between 1-4 minutes at 95-108% FTP with very short, 30-second recoveries between intervals."
     steps:
       - time: "2:00"
         ftp_percentage: "50%"
@@ -101,8 +105,10 @@ workouts:
       - time: "5:00"
         ftp_percentage: "50%"
   
-  - name: Diamond
-    description: "Threshold. 1h. Diamond is composed of 4x9-minute sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2-minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
+  - name: "Diamond"
+    category: "threshold"
+    duration_estimate: "1h"
+    description: "Diamond is composed of 4x9-minute sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2-minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
     steps:
       - time: "2:00"
         ftp_percentage: "50%"
@@ -172,7 +178,9 @@ workouts:
         ftp_percentage: "40%"
 
 
-  - name: Diamond-4
+  - name: "Diamond-4"
+    category: "threshold"
+    duration_estimate: "45m"
     description: "Threshold. composed four sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2 minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
     steps:
       - time: "2:00"
@@ -242,8 +250,10 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
   
-  - name: Kwaay
-    description: "Sweet Spot. Intevals. over 60 minutes of Tempo intervals spent between 75-88% FTP with intermittent, 5.5-minute recoveries at 55% FTP."
+  - name: "Kwaay"
+    category: "sweetspot"
+    duration_estimate: "1h"
+    description: "Over 60 minutes of Tempo intervals spent between 75-88% FTP with intermittent, 5.5-minute recoveries at 55% FTP."
     steps:
       - time: "8:00"
         ftp_percentage: "50%"
@@ -266,8 +276,10 @@ workouts:
       - time: "10:00"
         ftp_percentage: "50%"
 
-  - name: Yanamax
-    description: "Sweet Spot. Intevals. under 60 minutes of Tempo intervals spent between 81-88% FTP with intermittent."
+  - name: "Yanamax"
+    category: "Sweetspot"
+    duration_estimate: "1h:30m"
+    description: "Under 60 minutes of Tempo intervals spent between 81-88% FTP with intermittent."
     steps:
       - time: "8:00"
         ftp_percentage: "50%"
@@ -290,8 +302,10 @@ workouts:
       - time: "10:00"
         ftp_percentage: "50%"
 
-  - name: Antelope -1
-    description: "Sweet Spot. Intevals. 5x10-minute Sweet Spot intervals at 88% FTP with 5-minute recoveries between intervals."
+  - name: "Antelope -1"
+    category: "sweetspot"
+    duration_estimate: "1h:30m"
+    description: "5x10-minute Sweet Spot intervals at 88% FTP with 5-minute recoveries between intervals."
     steps:
       - time: "4:00"
         ftp_percentage: "60%"
@@ -322,8 +336,10 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
 
-  - name: Carson
-    description: "Sweet Spot. Intevals. 7x5-7-minute intervals between 88-94% FTP totaling 42 minutes of Sweet Spot work. Intervals are separated by 2-minute recoveries."
+  - name: "Carson"
+    category: "sweetspot"
+    duration_estimate: "1h:30m"
+    description: "7x5-7-minute intervals between 88-94% FTP totaling 42 minutes of Sweet Spot work. Intervals are separated by 2-minute recoveries."
     steps:
       - time: "4:00"
         ftp_percentage: "50%"
@@ -362,8 +378,10 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
 
-  - name: Solferino
-    description: "Vo2max. 4x4 minute intervals at 106% FTP. Each full interval is separated by a 9 minute second recovery valley."
+  - name: "Solferino"
+    category: "vo2max"
+    duration_estimate: "1h"
+    description: "4x4 minute intervals at 106% FTP. Each full interval is separated by a 9 minute second recovery valley."
     steps:
       - time: "1:30"
         ftp_percentage: "50%"
@@ -390,8 +408,10 @@ workouts:
       - time: "9:00"
         ftp_percentage: "40%"
 
-  - name: Ochsenhorn
-    description: "Vo2max. 4x4.5-minute intervals at 106% FTP. Each full interval is separated by a 9 minute and 40 second recovery valley."
+  - name: "Ochsenhorn"
+    category: "vo2max"
+    duration_estimate: "1h"
+    description: "4x4.5-minute intervals at 106% FTP. Each full interval is separated by a 9 minute and 40 second recovery valley."
     steps:
       - time: "1:30"
         ftp_percentage: "50%"
@@ -418,8 +438,10 @@ workouts:
       - time: "9:30"
         ftp_percentage: "40%"
   
-  - name: McMicken
-    description: "Vo2max. 4x4.75-minute intervals at 106% FTP. Each full interval is separated by a 9 minute and 40 second recovery valley."
+  - name: "McMicken"
+    category: "vo2max"
+    duration_estimate: "1h"
+    description: "4x4.75-minute intervals at 106% FTP. Each full interval is separated by a 9 minute and 40 second recovery valley."
     steps:
       - time: "1:30"
         ftp_percentage: "50%"
@@ -446,7 +468,9 @@ workouts:
       - time: "9:30"
         ftp_percentage: "40%"
 
-  - name: Sphinx
+  - name: "Sphinx"
+    category: "threshold"
+    duration_estimate: "1h"
     description: "Warm up then perform 5x30-second intervals increasing effort each time. Then, complete 2x10-minute intervals just above threshold with 5 minutes recovery between intervals."
     steps:
       - time: "5:00"
