@@ -1,6 +1,6 @@
 import yaml
 
-from fit_encoder import create_workout_step, create_workout
+from fit_encoder import create_workout, create_workout_step
 
 
 def parse_yaml(file_path):
@@ -40,6 +40,7 @@ def ftp_percent_to_watts(ftp_percentage, ftp):
         print("Invalid FTP percentage format.")
         return None
 
+
 # TODO unittest
 def prepare_data_for_fit_encoding(parsed_data):
     """Converts percentage watts and time. Remove unused."""
@@ -51,7 +52,9 @@ def prepare_data_for_fit_encoding(parsed_data):
         for step in workout["steps"]:
             converted_step = {}
             converted_step["time_ms"] = time_to_milliseconds(step["time"])
-            converted_step["watts_offset"] = ftp_percent_to_watts(step["ftp_percentage"], ftp) + 1000 # Offset of 1000 required for custom Watts in .fit file
+            converted_step["watts_offset"] = (
+                ftp_percent_to_watts(step["ftp_percentage"], ftp) + 1000
+            )  # Offset of 1000 required for custom Watts in .fit file
             converted_workout["steps"].append(converted_step)
         converted_data.append(converted_workout)
     return converted_data
@@ -61,7 +64,11 @@ def create_workouts(converted_data):
     for workout in converted_data:
         workout_steps = []
         for step in workout["steps"]:
-            workout_steps.append(create_workout_step(step_duration_ms=step["time_ms"], watts_offset=step["watts_offset"]))
+            workout_steps.append(
+                create_workout_step(
+                    step_duration_ms=step["time_ms"], watts_offset=step["watts_offset"]
+                )
+            )
         create_workout(workout_name=workout["name"], workout_steps=workout_steps)
 
 
