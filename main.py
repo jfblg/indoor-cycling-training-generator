@@ -1,6 +1,12 @@
+import os
+
 import yaml
 
 from fit_encoder import create_workout, create_workout_step
+
+WORKOUTS_DIR = "workouts"
+WORKOUTS_FILE = "workouts.yaml"
+TRAINING_PLANS_DIR = "training_plans/ftp_increase_1month"
 
 
 def parse_yaml(file_path):
@@ -72,11 +78,38 @@ def create_workouts(converted_data):
         create_workout(workout_name=workout["name"], workout_steps=workout_steps)
 
 
-# TODO output to the correct directory
+# TODO implement parser for training plans
+# TODO generate training plan based on workouts and data from training plan. output .fit files for each workout with the names "w[number]_d[1].fit"
+# TODO keep functionality to generate individual workouts from yaml file
 
-# Example usage
-file_path = "training_data.yaml"
-parsed_data = parse_yaml(file_path)
-# print(parsed_data)
-converted_data = prepare_data_for_fit_encoding(parsed_data)
-create_workouts(converted_data=converted_data)
+
+# TODO unittest
+def generate_filenames_for_training_plan(training_plan):
+    workout_file_prefix = training_plan["workout_file_prefix"]
+    should_rename = training_plan["workout_rename_enabled"]
+    should_index = training_plan["workout_indexing_enabled"]
+    training_plan["workout_filenames"] = []
+    for index, workout in enumerate(training_plan["workouts"]):
+        workout_name = workout.replace(" ", "_").lower()
+        if should_rename:
+            filename = training_plan["workout_file_prefix"]
+        else:
+            filename = f"{workout_file_prefix}_{workout_name}"
+
+        if should_index:
+            filename = f"{filename}_{index}"
+
+        training_plan["workout_filenames"].append(filename)
+    return training_plan
+
+
+if __name__ == "__main__":
+    workouts_path = os.path.join(WORKOUTS_DIR, WORKOUTS_FILE)
+    parsed_data = parse_yaml(workouts_path)
+    # TMP disabled
+    # converted_data = prepare_data_for_fit_encoding(parsed_data)
+    # create_workouts(converted_data=converted_data)
+    training_plan = os.path.join(TRAINING_PLANS_DIR, "week1.yaml")
+    # print(parse_yaml(training_plan))
+    generate_filenames_for_training_plan(parse_yaml(training_plan))
+    print("Done.")

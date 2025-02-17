@@ -3,4 +3,10 @@
 # Day3: Sweetspot - Kwaya
 
 ftp: 224
+workout_file_prefix: "w1"
+workout_rename_enabled: true
+workout_indexing_enabled: true
 workouts:
+  - diamond
+  - solferino
+  - kwaya

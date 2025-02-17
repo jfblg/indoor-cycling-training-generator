@@ -1,6 +1,6 @@
 ftp: 224
 workouts:
-  - name: "Gora"
+  - name: "gora"
     category: "sweetspot"
     duration_estimate: "1h"
     description: ""
@@ -20,7 +20,7 @@ workouts:
       - time: "5:00"
         ftp_percentage: "55%"
 
-  - name: "Tanasee"
+  - name: "tanasee"
     category: "threshold"
     duration_estimate: "1h"
     description: "Tanasee consists of 3 sets of short efforts lasting between 1-4 minutes at 95-108% FTP with very short, 30-second recoveries between intervals."
@@ -105,7 +105,7 @@ workouts:
       - time: "5:00"
         ftp_percentage: "50%"
   
-  - name: "Diamond"
+  - name: "diamond"
     category: "threshold"
     duration_estimate: "1h"
     description: "Diamond is composed of 4x9-minute sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2-minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
@@ -178,7 +178,7 @@ workouts:
         ftp_percentage: "40%"
 
 
-  - name: "Diamond-4"
+  - name: "diamond-4"
     category: "threshold"
     duration_estimate: "45m"
     description: "Threshold. composed four sets of varied VO2 Max/Anaerobic (105-135% FTP) bridging efforts ranging from 30 seconds to 2 minutes with varied intervals at Sweet Spot/Threshold (90-95% FTP) in between."
@@ -250,7 +250,7 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
   
-  - name: "Kwaay"
+  - name: "kwaay"
     category: "sweetspot"
     duration_estimate: "1h"
     description: "Over 60 minutes of Tempo intervals spent between 75-88% FTP with intermittent, 5.5-minute recoveries at 55% FTP."
@@ -276,7 +276,7 @@ workouts:
       - time: "10:00"
         ftp_percentage: "50%"
 
-  - name: "Yanamax"
+  - name: "yanamax"
     category: "Sweetspot"
     duration_estimate: "1h:30m"
     description: "Under 60 minutes of Tempo intervals spent between 81-88% FTP with intermittent."
@@ -302,7 +302,7 @@ workouts:
       - time: "10:00"
         ftp_percentage: "50%"
 
-  - name: "Antelope -1"
+  - name: "antelope-1"
     category: "sweetspot"
     duration_estimate: "1h:30m"
     description: "5x10-minute Sweet Spot intervals at 88% FTP with 5-minute recoveries between intervals."
@@ -336,7 +336,7 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
 
-  - name: "Carson"
+  - name: "carson"
     category: "sweetspot"
     duration_estimate: "1h:30m"
     description: "7x5-7-minute intervals between 88-94% FTP totaling 42 minutes of Sweet Spot work. Intervals are separated by 2-minute recoveries."
@@ -378,7 +378,7 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
 
-  - name: "Solferino"
+  - name: "solferino"
     category: "vo2max"
     duration_estimate: "1h"
     description: "4x4 minute intervals at 106% FTP. Each full interval is separated by a 9 minute second recovery valley."
@@ -408,7 +408,7 @@ workouts:
       - time: "9:00"
         ftp_percentage: "40%"
 
-  - name: "Ochsenhorn"
+  - name: "ochsenhorn"
     category: "vo2max"
     duration_estimate: "1h"
     description: "4x4.5-minute intervals at 106% FTP. Each full interval is separated by a 9 minute and 40 second recovery valley."
@@ -438,7 +438,7 @@ workouts:
       - time: "9:30"
         ftp_percentage: "40%"
   
-  - name: "McMicken"
+  - name: "mc_micken"
     category: "vo2max"
     duration_estimate: "1h"
     description: "4x4.75-minute intervals at 106% FTP. Each full interval is separated by a 9 minute and 40 second recovery valley."
@@ -468,7 +468,7 @@ workouts:
       - time: "9:30"
         ftp_percentage: "40%"
 
-  - name: "Sphinx"
+  - name: "sphinx"
     category: "threshold"
     duration_estimate: "1h"
     description: "Warm up then perform 5x30-second intervals increasing effort each time. Then, complete 2x10-minute intervals just above threshold with 5 minutes recovery between intervals."
