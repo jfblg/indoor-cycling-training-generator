@@ -66,7 +66,7 @@ def prepare_data_for_fit_encoding(parsed_data):
     return converted_data
 
 
-def create_workouts(converted_data):
+def encode_workouts_to_fit_files(converted_data):
     for workout in converted_data:
         workout_steps = []
         for step in workout["steps"]:
@@ -84,6 +84,7 @@ def create_workouts(converted_data):
 
 
 # TODO unittest
+# FIX add input validation - handling of missing keys
 def generate_filenames_for_training_plan(training_plan):
     workout_file_prefix = training_plan["workout_file_prefix"]
     should_rename = training_plan["workout_rename_enabled"]
@@ -91,25 +92,75 @@ def generate_filenames_for_training_plan(training_plan):
     training_plan["workout_filenames"] = []
     for index, workout in enumerate(training_plan["workouts"]):
         workout_name = workout.replace(" ", "_").lower()
-        if should_rename:
-            filename = training_plan["workout_file_prefix"]
-        else:
-            filename = f"{workout_file_prefix}_{workout_name}"
-
+        filename = f"{workout_file_prefix}"
         if should_index:
             filename = f"{filename}_{index}"
+        if not should_rename:
+            filename = f"{filename}_{workout_name}"
 
         training_plan["workout_filenames"].append(filename)
     return training_plan
 
 
+def filter_out_workouts(workout_data, training_plan):
+    workouts = workout_data["workouts"]
+    workouts_filtered = []
+    for workout in workouts:
+        if workout["name"] in training_plan["workouts"]:
+            workouts_filtered.append(workout)
+
+    if len(workouts_filtered) == 0:
+        print("No workouts found in training plan.")
+    if len(workouts_filtered) < len(training_plan["workouts"]):
+        print("Some workouts not found in training plan.")
+        print("Workouts found:")
+        for workout in workouts_filtered:
+            print(workout["name"])
+
+    return workouts_filtered
+
+
+def rename_workouts_based_on_training_plan_configuration(workouts, training_plan):
+    for workout in workouts:
+        workout_name = workout["name"]
+        workout_index = training_plan["workouts"].index(workout_name)
+        workout_filename = training_plan["workout_filenames"][workout_index]
+        workout["name"] = workout_filename
+    return workouts
+
+
+def create_workouts_from_training_plan_for_fit_encoder(training_plan, workouts):
+    training_plan_ftp = training_plan["ftp"]
+    print(f"Workouts generated for FTP: {training_plan_ftp}")
+    workouts_plus_ftp = {
+        "ftp": training_plan_ftp,
+        "workouts": workouts,
+    }
+    return workouts_plus_ftp
+
+
+# TODO bug: if the same workout is used multiple times in the training plan, only the first occurrence will be generated as fit file
+
 if __name__ == "__main__":
     workouts_path = os.path.join(WORKOUTS_DIR, WORKOUTS_FILE)
-    parsed_data = parse_yaml(workouts_path)
+    workout_data = parse_yaml(workouts_path)
     # TMP disabled
     # converted_data = prepare_data_for_fit_encoding(parsed_data)
-    # create_workouts(converted_data=converted_data)
-    training_plan = os.path.join(TRAINING_PLANS_DIR, "week1.yaml")
+    # encode_workouts_to_fit_files(converted_data=converted_data)
+
+    training_plan = os.path.join(TRAINING_PLANS_DIR, "week4.yaml")
     # print(parse_yaml(training_plan))
-    generate_filenames_for_training_plan(parse_yaml(training_plan))
+    training_plan_with_filenames = generate_filenames_for_training_plan(
+        parse_yaml(training_plan)
+    )
+    workouts_filtered = filter_out_workouts(workout_data, training_plan_with_filenames)
+    workouts_renamed = rename_workouts_based_on_training_plan_configuration(
+        workouts_filtered, training_plan_with_filenames
+    )
+    workouts_plus_ftp = create_workouts_from_training_plan_for_fit_encoder(
+        training_plan_with_filenames, workouts_renamed
+    )
+    workouts_converted = prepare_data_for_fit_encoding(workouts_plus_ftp)
+    encode_workouts_to_fit_files(converted_data=workouts_converted)
+
     print("Done.")

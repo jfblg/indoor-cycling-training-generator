@@ -1,7 +1,13 @@
 # Relax week
-# Day1: Endurance - Gora
-# Day2: Endurance - Gora
-# Day3: Endurance - Little_park 
+# Day1: Endurance - gora
+# Day2: Endurance - gora
+# Day3: Endurance - little_park 
 
-ftp: 224
+ftp: 223
+workout_file_prefix: "w4"
+workout_rename_enabled: false
+workout_indexing_enabled: true
 workouts:
+  - gora
+  - gora
+  - little_park

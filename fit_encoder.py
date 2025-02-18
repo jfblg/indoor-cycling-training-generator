@@ -15,7 +15,12 @@ from fit_tool.profile.profile_type import (
     WorkoutStepTarget,
 )
 
-output_directory = "output"
+OUTPUT_DIRECTORY = "output"
+
+
+def ensure_output_directory_exists(directory):
+    if not os.path.exists(directory):
+        os.makedirs(directory)
 
 
 def create_workout_step(step_duration_ms, watts_offset):
@@ -56,6 +61,7 @@ def create_workout(workout_name, workout_steps):
 
     fit_file = builder.build()
     out_filename = f"{workout_name}_workout.fit"
-    out_path = os.path.join(output_directory, out_filename)
+    ensure_output_directory_exists(OUTPUT_DIRECTORY)
+    out_path = os.path.join(OUTPUT_DIRECTORY, out_filename)
     print(f"generating: {out_path}")
     fit_file.to_file(out_path)

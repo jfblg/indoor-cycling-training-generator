@@ -2,9 +2,9 @@
 # Day2: VO2MAX - Solferino
 # Day3: Sweetspot - Kwaya
 
-ftp: 224
+ftp: 223
 workout_file_prefix: "w1"
-workout_rename_enabled: true
+workout_rename_enabled: false
 workout_indexing_enabled: true
 workouts:
   - diamond

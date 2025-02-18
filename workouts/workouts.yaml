@@ -250,7 +250,7 @@ workouts:
       - time: "5:00"
         ftp_percentage: "40%"
   
-  - name: "kwaay"
+  - name: "kwaya"
     category: "sweetspot"
     duration_estimate: "1h"
     description: "Over 60 minutes of Tempo intervals spent between 75-88% FTP with intermittent, 5.5-minute recoveries at 55% FTP."

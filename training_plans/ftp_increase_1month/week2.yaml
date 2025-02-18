@@ -2,5 +2,11 @@
 # Day2: VO2MAX - Ochsenhorn
 # Day3: Sweetspot - Yanamax
 
-ftp: 224
+ftp: 223
+workout_file_prefix: "w2"
+workout_rename_enabled: false
+workout_indexing_enabled: true
 workouts:
+  - tanasee
+  - ochsenhorn
+  - yanamax

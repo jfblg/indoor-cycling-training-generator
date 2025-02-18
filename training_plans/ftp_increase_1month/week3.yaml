@@ -2,6 +2,12 @@
 # Day2: VO2MAX - McMicken - 1:00
 # Day3: Sweetspot - Antelope -1 - 1:30
 
-ftp: 224
+ftp: 223
+workout_file_prefix: "w3"
+workout_rename_enabled: false
+workout_indexing_enabled: true
 workouts:
+  - diamond
+  - mcmicken
+  - antelope-1
 
