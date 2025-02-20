@@ -514,7 +514,7 @@ workouts:
 
 
   - name: "teutonia"
-    category: "sweetspot"
+    category: "treshold"
     duration_estimate: "1h"
     description: "3 sets of short efforts lasting between 1-4 minutes at 100-115% FTP with very short, 30-second recoveries between intervals."
     steps:
@@ -598,3 +598,29 @@ workouts:
         ftp_percentage: "100%"
       - time: "2:50"
         ftp_percentage: "40%"
+
+  - name: "pen_y_castell"
+    category: "sweetspot"
+    duration_estimate: "1h:30m"
+    description: "just under 60 minutes of Tempo intervals spent between 75-88% FTP with intermittent, 6.5-minute recoveries at 55% FTP."
+    steps:
+      - time: "8:00"
+        ftp_percentage: "50%"
+      - time: "9:00"
+        ftp_percentage: "65%"
+      - time: "10:00"
+        ftp_percentage: "80%"
+      - time: "6:00"
+        ftp_percentage: "55%"
+      - time: "9:00"
+        ftp_percentage: "88%"
+      - time: "6:00"
+        ftp_percentage: "55%"
+      - time: "10:00"
+        ftp_percentage: "75%"
+      - time: "6:00"
+        ftp_percentage: "55%"
+      - time: "10:00"
+        ftp_percentage: "85%"
+      - time: "10:00"
+        ftp_percentage: "55%"
