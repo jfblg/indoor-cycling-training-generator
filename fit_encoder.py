@@ -25,7 +25,7 @@ def ensure_output_directory_exists(directory):
 
 def create_workout_step(step_duration_ms, watts_offset):
     step = WorkoutStepMessage()
-    step.workout_step_name = "Step 1"  # don't use unless not necessary
+    step.workout_step_name = "Step 1"
     step.intensity = Intensity.OTHER
     step.duration_type = WorkoutStepDuration.TIME
     step.duration_time = step_duration_ms

@@ -140,6 +140,7 @@ def create_workouts_from_training_plan_for_fit_encoder(training_plan, workouts):
 
 
 # TODO bug: if the same workout is used multiple times in the training plan, only the first occurrence will be generated as fit file
+# TODO bug: if I copy multiple files to Garmin edge, only first workout appears on the device
 
 if __name__ == "__main__":
     workouts_path = os.path.join(WORKOUTS_DIR, WORKOUTS_FILE)
@@ -148,7 +149,7 @@ if __name__ == "__main__":
     # converted_data = prepare_data_for_fit_encoding(parsed_data)
     # encode_workouts_to_fit_files(converted_data=converted_data)
 
-    training_plan = os.path.join(TRAINING_PLANS_DIR, "week4.yaml")
+    training_plan = os.path.join(TRAINING_PLANS_DIR, "week1.yaml")
     # print(parse_yaml(training_plan))
     training_plan_with_filenames = generate_filenames_for_training_plan(
         parse_yaml(training_plan)
