@@ -44,7 +44,12 @@ def create_workout(workout_name, workout_steps):
     file_id_message.type = FileType.WORKOUT
     file_id_message.manufacturer = Manufacturer.GARMIN.value
     file_id_message.product = 0
-    file_id_message.time_created = round(datetime.datetime.now().timestamp() * 1000)
+    time_offset = random.randint(
+        -500, 500
+    )  # Offset of 1000 to have some randomness in the time_created when generating multiple files
+    file_id_message.time_created = round(
+        (datetime.datetime.now().timestamp() + time_offset) * 1000
+    )
     file_id_message.serial_number = random.randint(0, 0xFFFFFFFF)
 
     workout_message = WorkoutMessage()
