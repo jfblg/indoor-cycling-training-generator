@@ -1,5 +1,6 @@
 import datetime
 import os
+import random
 
 from fit_tool.fit_file_builder import FitFileBuilder
 from fit_tool.profile.messages.file_id_message import FileIdMessage
@@ -44,7 +45,7 @@ def create_workout(workout_name, workout_steps):
     file_id_message.manufacturer = Manufacturer.GARMIN.value
     file_id_message.product = 0
     file_id_message.time_created = round(datetime.datetime.now().timestamp() * 1000)
-    file_id_message.serial_number = 0x12345678
+    file_id_message.serial_number = random.randint(0, 0xFFFFFFFF)
 
     workout_message = WorkoutMessage()
     workout_message.workout_name = workout_name
