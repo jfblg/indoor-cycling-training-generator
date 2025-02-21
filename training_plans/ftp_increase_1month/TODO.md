@@ -1,0 +1,1 @@
+TODO structure training plan so that all 4 weeks are in a same file for example
