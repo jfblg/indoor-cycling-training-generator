@@ -756,7 +756,7 @@ workouts:
   - name: " idaho"
     category: "vo2max"
     duration_estimate: "30m"
-    description: "idaho consists of 4 sets of intervals which last 2 minutes and 45 seconds. Each interval consists of six 15-second efforts at 108% FTP with five less than restful "floats" for 15 seconds at 83% FTP"
+    description: "idaho consists of 4 sets of intervals which last 2 minutes and 45 seconds. Each interval consists of six 15-second efforts at 108% FTP with five less than restful floats for 15 seconds at 83% FTP"
     steps:
       - time: "1:00"
         ftp_percentage: "50%"
