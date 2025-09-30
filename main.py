@@ -23,7 +23,7 @@ def parse_yaml(file_path):
         return None
 
 
-# TODO unittest
+# TODO: unittest
 def time_to_milliseconds(time_str):
     """Converts time in 'MM:SS' format to milliseconds."""
     try:
@@ -34,7 +34,7 @@ def time_to_milliseconds(time_str):
         return None
 
 
-# TODO unittest
+# TODO: unittest
 def ftp_percent_to_watts(ftp_percentage, ftp):
     """Converts % FTP value to absolute watts."""
     if not ftp_percentage.endswith("%"):
@@ -47,7 +47,7 @@ def ftp_percent_to_watts(ftp_percentage, ftp):
         return None
 
 
-# TODO unittest
+# TODO: unittest
 def prepare_data_for_fit_encoding(parsed_data):
     """Converts percentage watts and time. Remove unused."""
     converted_data = []  # list of workouts
@@ -78,13 +78,13 @@ def encode_workouts_to_fit_files(converted_data):
         create_workout(workout_name=workout["name"], workout_steps=workout_steps)
 
 
-# TODO implement parser for training plans
-# TODO generate training plan based on workouts and data from training plan. output .fit files for each workout with the names "w[number]_d[1].fit"
-# TODO keep functionality to generate individual workouts from yaml file
+# TODO: implement parser for training plans
+# TODO: generate training plan based on workouts and data from training plan. output .fit files for each workout with the names "w[number]_d[1].fit"
+# TODO: keep functionality to generate individual workouts from yaml file
 
 
-# TODO unittest
-# FIX add input validation - handling of missing keys
+# TODO: unittest
+# FIXME: add input validation - handling of missing keys
 def generate_filenames_for_training_plan(training_plan):
     workout_file_prefix = training_plan["workout_file_prefix"]
     should_rename = training_plan["workout_rename_enabled"]
@@ -139,8 +139,8 @@ def create_workouts_from_training_plan_for_fit_encoder(training_plan, workouts):
     return workouts_plus_ftp
 
 
-# TODO bug: if the same workout is used multiple times in the training plan, only the first occurrence will be generated as fit file
-# TODO bug: if I copy multiple files to Garmin edge, only first workout appears on the device
+# TODO: bug: if the same workout is used multiple times in the training plan, only the first occurrence will be generated as fit file
+# TODO: bug: if I copy multiple files to Garmin edge, only first workout appears on the device
 
 if __name__ == "__main__":
     workouts_path = os.path.join(WORKOUTS_DIR, WORKOUTS_FILE)
