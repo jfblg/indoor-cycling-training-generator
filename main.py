@@ -1,6 +1,7 @@
 import os
 import yaml
 import copy
+import datetime
 from typing import List, Dict, Any, Optional
 
 from fit_encoder import create_workout, create_workout_step
@@ -69,9 +70,10 @@ def prepare_workout_steps_for_fit(workout: Dict[str, Any], ftp: int) -> List[Dic
     return prepared_steps
 
 def encode_workouts_to_fit_files(workouts: List[Dict[str, Any]], ftp: int):
-    """Converts a list of workouts to .fit files."""
+    """Converts a list of workouts to .fit files, ensuring unique timestamps."""
     print(f"Generating workouts for FTP: {ftp}")
-    for workout in workouts:
+    start_time = datetime.datetime.now()
+    for i, workout in enumerate(workouts):
         fit_steps = []
         prepared_steps = prepare_workout_steps_for_fit(workout, ftp)
         for step_data in prepared_steps:
@@ -81,7 +83,14 @@ def encode_workouts_to_fit_files(workouts: List[Dict[str, Any]], ftp: int):
                     watts_offset=step_data["watts_offset"]
                 )
             )
-        create_workout(workout_name=workout["name"], workout_steps=fit_steps)
+        
+        # Generate a unique creation time for each file to avoid device conflicts
+        creation_time = start_time + datetime.timedelta(seconds=i)
+        create_workout(
+            workout_name=workout["name"], 
+            workout_steps=fit_steps, 
+            creation_time=creation_time
+        )
 
 
 # --- Training Plan Logic ---
