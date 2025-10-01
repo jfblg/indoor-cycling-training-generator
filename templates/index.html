@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout Visualizer</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: sans-serif; margin: 2em; }
+        h1 { text-align: center; }
+        h2 { border-bottom: 1px solid #ccc; padding-bottom: 5px; margin-top: 2em; }
+        .graph-container { display: flex; flex-wrap: wrap; justify-content: center; }
+        .graph { margin: 1em; border: 1px solid #eee; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <h1>Workout Visualizations</h1>
+    {% for group in workout_groups %}
+        <h2>Source: {{ group.source }}</h2>
+        <div class="graph-container">
+        {% for graph in group.graphs %}
+            <div class="graph">
+                {{ graph|safe }}
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No workout files found in the 'workouts' directory.</p>
+    {% endfor %}
+</body>
+</html>
