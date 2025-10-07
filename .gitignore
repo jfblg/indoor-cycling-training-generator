@@ -64,6 +64,8 @@ pip-selfcheck.json
 .history
 .ionide
 
-__pycache__/*
-
 output/
+
+# Python build artifacts
+__pycache__/
+*.egg-info/
