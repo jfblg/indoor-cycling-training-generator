@@ -3,12 +3,11 @@ import yaml
 import copy
 import datetime
 from typing import List, Dict, Any, Optional
+from importlib import resources
 
-from fit_encoder import create_workout, create_workout_step
+from .fit_encoder import create_workout, create_workout_step
 
 # --- Constants ---
-WORKOUTS_DIR = "workouts"
-TRAINING_PLANS_DIR = "training_plans/ftp_increase_1month"
 FIT_POWER_OFFSET = 1000  # Offset required for custom Watts in .fit files
 
 
@@ -69,7 +68,7 @@ def prepare_workout_steps_for_fit(workout: Dict[str, Any], ftp: int) -> List[Dic
         })
     return prepared_steps
 
-def encode_workouts_to_fit_files(workouts: List[Dict[str, Any]], ftp: int):
+def encode_workouts_to_fit_files(workouts: List[Dict[str, Any]], ftp: int, output_dir: str):
     """Converts a list of workouts to .fit files, ensuring unique timestamps."""
     print(f"Generating workouts for FTP: {ftp}")
     start_time = datetime.datetime.now()
@@ -89,7 +88,8 @@ def encode_workouts_to_fit_files(workouts: List[Dict[str, Any]], ftp: int):
         create_workout(
             workout_name=workout["name"], 
             workout_steps=fit_steps, 
-            creation_time=creation_time
+            creation_time=creation_time,
+            output_dir=output_dir
         )
 
 
@@ -142,36 +142,40 @@ def rename_plan_workouts(
 
 def main():
     """Main function to generate workouts from a training plan."""
-    # 1. Load all available workouts into a lookup map
-    workouts_path = os.path.join(WORKOUTS_DIR, "workouts.yaml")
-    available_workouts = load_workouts_by_name(workouts_path)
+    # 1. Use importlib.resources to get paths to data files
+    base_path = resources.files("indoor_cycling_training_generator")
+    workouts_path = base_path / "workouts" / "workouts.yaml"
+    training_plan_path = base_path / "training_plans" / "ftp_increase_1month" / "week1.yaml"
+    output_dir = "output"
+
+    # 2. Load all available workouts into a lookup map
+    available_workouts = load_workouts_by_name(str(workouts_path))
     if not available_workouts:
         print("No available workouts found. Exiting.")
         return
 
-    # 2. Load the training plan
-    training_plan_path = os.path.join(TRAINING_PLANS_DIR, "week1.yaml")
-    training_plan = parse_yaml(training_plan_path)
+    # 3. Load the training plan
+    training_plan = parse_yaml(str(training_plan_path))
     if not training_plan:
         print("No training plan found. Exiting.")
         return
 
-    # 3. Build the list of workouts for the plan (handles duplicates correctly)
+    # 4. Build the list of workouts for the plan
     plan_workouts = build_workouts_from_plan(training_plan, available_workouts)
 
-    # 4. Rename the workouts based on plan configuration
+    # 5. Rename the workouts based on plan configuration
     renamed_workouts = rename_plan_workouts(plan_workouts, training_plan)
 
-    # 5. Get FTP from the training plan
+    # 6. Get FTP from the training plan
     plan_ftp = training_plan.get("ftp")
     if not plan_ftp:
         print("FTP not specified in the training plan. Exiting.")
         return
 
-    # 6. Generate the .fit files
-    encode_workouts_to_fit_files(renamed_workouts, plan_ftp)
+    # 7. Generate the .fit files
+    encode_workouts_to_fit_files(renamed_workouts, plan_ftp, output_dir)
 
-    print("Done.")
+    print(f"Workouts generated in the '{output_dir}' directory.")
 
 if __name__ == "__main__":
     main()

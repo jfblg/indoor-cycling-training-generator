@@ -1,0 +1,39 @@
+[project]
+name = "indoor-cycling-training-generator"
+version = "0.1.0"
+description = "A tool to generate and visualize indoor cycling workouts."
+authors = [{ name = "Your Name", email = "your@email.com" }]
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "PyYAML",
+    "fit-tool",
+    "Flask",
+    "plotly",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+    "mypy",
+]
+
+[project.scripts]
+indoor-cycling-generator = "indoor_cycling_training_generator.main:main"
+indoor-cycling-visualizer = "indoor_cycling_training_generator.visualizer:run_app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+

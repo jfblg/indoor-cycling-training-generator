@@ -17,8 +17,7 @@ from fit_tool.profile.profile_type import (
     WorkoutStepTarget,
 )
 
-# --- Constants ---
-OUTPUT_DIRECTORY = "output"
+
 
 # --- Functions ---
 
@@ -48,7 +47,8 @@ def create_workout_step(
 def create_workout(
     workout_name: str, 
     workout_steps: List[WorkoutStepMessage], 
-    creation_time: datetime.datetime
+    creation_time: datetime.datetime,
+    output_dir: str = "output"
 ) -> None:
     """
     Creates a complete .fit workout file from a list of steps.
@@ -82,8 +82,8 @@ def create_workout(
     fit_file = builder.build()
 
     # 4. Write the file to the output directory
-    ensure_output_directory_exists(OUTPUT_DIRECTORY)
+    ensure_output_directory_exists(output_dir)
     out_filename = f"{workout_name}_workout.fit"
-    out_path = os.path.join(OUTPUT_DIRECTORY, out_filename)
+    out_path = os.path.join(output_dir, out_filename)
     print(f"Generating: {out_path}")
     fit_file.to_file(out_path)

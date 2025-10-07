@@ -2,11 +2,11 @@ import os
 import glob
 import plotly.graph_objects as go
 from flask import Flask, render_template
-from main import parse_yaml, time_to_milliseconds, ftp_percent_to_watts
+from importlib import resources
 
-app = Flask(__name__)
+from .main import parse_yaml, time_to_milliseconds, ftp_percent_to_watts
 
-WORKOUTS_DIR = "workouts"
+app = Flask(__name__, template_folder="templates")
 
 def create_workout_graph(workout, ftp):
     x_values = []
@@ -47,7 +47,9 @@ def create_workout_graph(workout, ftp):
 
 @app.route("/")
 def index():
-    workout_files = glob.glob(os.path.join(WORKOUTS_DIR, "*.yaml"))
+    base_path = resources.files("indoor_cycling_training_generator")
+    workouts_path = base_path / "workouts"
+    workout_files = glob.glob(os.path.join(str(workouts_path), "*.yaml"))
     workout_groups = []
 
     for file_path in workout_files:
@@ -71,5 +73,8 @@ def index():
 
     return render_template("index.html", workout_groups=workout_groups)
 
-if __name__ == "__main__":
+def run_app():
     app.run(debug=True, port=5001)
+
+if __name__ == "__main__":
+    run_app()
