@@ -2,6 +2,8 @@ import os
 import yaml
 import copy
 import datetime
+import argparse
+import sys
 from typing import List, Dict, Any, Optional
 from importlib import resources
 
@@ -83,7 +85,6 @@ def encode_workouts_to_fit_files(workouts: List[Dict[str, Any]], ftp: int, outpu
                 )
             )
         
-        # Generate a unique creation time for each file to avoid device conflicts
         creation_time = start_time + datetime.timedelta(seconds=i)
         create_workout(
             workout_name=workout["name"], 
@@ -110,7 +111,6 @@ def build_workouts_from_plan(
     plan_workouts = []
     for workout_name in training_plan.get("workouts", []):
         if workout_name in available_workouts:
-            # Use deepcopy to ensure each workout in the plan is a unique object
             plan_workouts.append(copy.deepcopy(available_workouts[workout_name]))
         else:
             print(f"Warning: Workout '{workout_name}' from training plan not found in available workouts.")
@@ -142,40 +142,102 @@ def rename_plan_workouts(
 
 def main():
     """Main function to generate workouts from a training plan."""
-    # 1. Use importlib.resources to get paths to data files
+    parser = argparse.ArgumentParser(description="Indoor Cycling Training Generator")
+    parser.add_argument("--list-plans", action="store_true", help="List all available training plans.")
+    parser.add_argument("--list-workouts", action="store_true", help="List all available workouts.")
+    
+    subparsers = parser.add_subparsers(dest="command", help="Available commands")
+
+    # Generate command
+    gen_parser = subparsers.add_parser("generate", help="Generate workout files from a plan.")
+    gen_parser.add_argument("-p", "--plan", required=True, help="Path to the training plan YAML file.")
+    gen_parser.add_argument("--ftp", type=int, help="Override the FTP value in the training plan.")
+    gen_parser.add_argument("-o", "--output-dir", default="output", help="Directory to save the generated .fit files.")
+
+    # List command
+    list_parser = subparsers.add_parser("list", help="Display information about a specific training plan.")
+    list_parser.add_argument("plan_file", help="The training plan file to inspect (e.g., ftp_increase_1month/week1.yaml)")
+
+    # Default to 'generate' if no command is given, but a plan is specified
+    args = parser.parse_args()
+    if args.command is None and any(arg in sys.argv for arg in ['--plan', '-p']):
+        # Manually re-parse with 'generate' as the command
+        args = parser.parse_args(['generate'] + sys.argv[1:])
+
     base_path = resources.files("indoor_cycling_training_generator")
     workouts_path = base_path / "workouts" / "workouts.yaml"
-    training_plan_path = base_path / "training_plans" / "ftp_increase_1month" / "week1.yaml"
-    output_dir = "output"
+    plans_path = base_path / "training_plans"
 
-    # 2. Load all available workouts into a lookup map
-    available_workouts = load_workouts_by_name(str(workouts_path))
-    if not available_workouts:
-        print("No available workouts found. Exiting.")
+    # --- Handle Utility Arguments ---
+    if args.list_plans:
+        print("Available training plans:")
+        for root, _, files in os.walk(plans_path):
+            for file in files:
+                if file.endswith(".yaml"):
+                    print(f"  - {os.path.relpath(os.path.join(root, file), plans_path)}")
         return
 
-    # 3. Load the training plan
-    training_plan = parse_yaml(str(training_plan_path))
-    if not training_plan:
-        print("No training plan found. Exiting.")
+    if args.list_workouts:
+        available_workouts = load_workouts_by_name(str(workouts_path))
+        if not available_workouts:
+            print("No available workouts found.")
+            return
+        print("Available workouts:")
+        for name in sorted(available_workouts.keys()):
+            print(f"  - {name}")
         return
 
-    # 4. Build the list of workouts for the plan
-    plan_workouts = build_workouts_from_plan(training_plan, available_workouts)
+    # --- Handle Subcommands ---
+    if args.command == "list":
+        plan_path = plans_path / args.plan_file
+        if not plan_path.exists():
+            print(f"Error: Training plan not found at '{args.plan_file}'")
+            return
+        
+        plan_data = parse_yaml(str(plan_path))
+        if not plan_data:
+            return
 
-    # 5. Rename the workouts based on plan configuration
-    renamed_workouts = rename_plan_workouts(plan_workouts, training_plan)
+        print(f"Details for training plan: {args.plan_file}")
+        print(f"  Path: {plan_path}")
+        print(f"  Configured FTP: {plan_data.get('ftp', 'Not set')}")
+        print("  Workouts:")
+        for workout in plan_data.get("workouts", []):
+            print(f"    - {workout}")
 
-    # 6. Get FTP from the training plan
-    plan_ftp = training_plan.get("ftp")
-    if not plan_ftp:
-        print("FTP not specified in the training plan. Exiting.")
-        return
+    elif args.command == "generate":
+        training_plan_path = args.plan
+        if not os.path.exists(training_plan_path):
+            maybe_path = plans_path / training_plan_path
+            if maybe_path.exists():
+                training_plan_path = str(maybe_path)
+            else:
+                print(f"Error: Training plan not found at '{args.plan}'")
+                return
 
-    # 7. Generate the .fit files
-    encode_workouts_to_fit_files(renamed_workouts, plan_ftp, output_dir)
+        available_workouts = load_workouts_by_name(str(workouts_path))
+        if not available_workouts:
+            print("No available workouts found. Exiting.")
+            return
 
-    print(f"Workouts generated in the '{output_dir}' directory.")
+        training_plan = parse_yaml(training_plan_path)
+        if not training_plan:
+            print("Could not parse training plan. Exiting.")
+            return
+
+        plan_workouts = build_workouts_from_plan(training_plan, available_workouts)
+        renamed_workouts = rename_plan_workouts(plan_workouts, training_plan)
+
+        plan_ftp = args.ftp if args.ftp is not None else training_plan.get("ftp")
+        if not plan_ftp:
+            print("FTP not specified in the training plan or with --ftp flag. Exiting.")
+            return
+
+        encode_workouts_to_fit_files(renamed_workouts, plan_ftp, args.output_dir)
+        print(f"Workouts generated in the '{args.output_dir}' directory.")
+    
+    else:
+        parser.print_help()
 
 if __name__ == "__main__":
     main()
